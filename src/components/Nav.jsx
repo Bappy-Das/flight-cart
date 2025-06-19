@@ -16,25 +16,41 @@ const Nav = () => {
           </div>
           <nav className="flex items-center justify-center">
             <ul className="flex space-x-14">
-              <li className="flex flex-col justify-center items-center cursor-pointer gap-1.5 hover:underline hover:underline-offset-4 ">
+              <li className="relative flex flex-col justify-center items-center cursor-pointer gap-1.5 group pb-1">
                 <img src={flightIcon} width={30} height={30} alt="Flight Icon" />
-                <span className="text-amber-400 font-bold text-sm capitalize">Flight</span>
+                <span className="text-amber-400 font-bold text-sm capitalize group-hover:text-white transition-all duration-300">
+                  Flight
+                </span>
+                <span className="absolute bottom-0 left-0 w-full h-0.5 bg-amber-400  scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-center"></span>
               </li>
-              <li className="flex flex-col justify-center items-center cursor-pointer gap-1.5">
+
+              <li className="relative flex flex-col justify-center items-center cursor-pointer gap-1.5 group  pb-1">
                 <img src={hotelIcon} width={30} height={30} alt="Hotel Icon" />
-                <span className="text-amber-400 font-bold text-sm capitalize">Hotel</span>
+                <span className="text-amber-400 font-bold text-sm capitalize group-hover:text-white transition-all duration-300">
+                  Hotel
+                </span>
+                <span className="absolute bottom-0 left-0 w-full h-0.5 bg-amber-400  scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-center"></span>
               </li>
-              <li className="flex flex-col justify-center items-center cursor-pointer gap-1.5">
+              <li className="relative flex flex-col justify-center items-center cursor-pointer gap-1.5 group  pb-1">
                 <img src={holidaysIcon} width={30} height={30} alt="Holidays Icon" />
-                <span className="text-amber-400 font-bold text-sm capitalize">Holidays</span>
+                <span className="text-amber-400 font-bold text-sm capitalize group-hover:text-white transition-all duration-300">
+                  Holidays
+                </span>
+                <span className="absolute bottom-0 left-0 w-full h-0.5 bg-amber-400  scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-center"></span>
               </li>
-              <li className="flex flex-col justify-center items-center cursor-pointer gap-1.5">
+              <li className="relative flex flex-col justify-center items-center cursor-pointer gap-1.5 group  pb-1">
                 <img src={visaIcon} width={30} height={30} alt="Visa Icon" />
-                <span className="text-amber-400 font-bold text-sm capitalize">Visa</span>
+                <span className="text-amber-400 font-bold text-sm capitalize group-hover:text-white transition-all duration-300">
+                  Visa
+                </span>
+                <span className="absolute bottom-0 left-0 w-full h-0.5 bg-amber-400  scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-center"></span>
               </li>
-              <li className="flex flex-col justify-center items-center cursor-pointer gap-1.5">
+              <li className="relative flex flex-col justify-center items-center cursor-pointer gap-1.5 group pb-1">
                 <img src={promotionsIcon} width={30} height={30} alt="Promotions Icon" />
-                <span className="text-amber-400 font-bold text-sm capitalize">Promotions</span>
+                <span className="text-amber-400 font-bold text-sm capitalize group-hover:text-white transition-all duration-300">
+                  Promotions
+                </span>
+                <span className="absolute bottom-0 left-0 w-full h-0.5 bg-amber-400  scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-center"></span>
               </li>
             </ul>
           </nav>
