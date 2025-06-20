@@ -32,9 +32,8 @@ const Banner = () => {
             </div>
           </div>
           <div className="absolute top-8/12 left-1/2 -translate-x-1/2 w-[95%] max-w-6xl z-20 p-3 ">
-            {/* <div className="absolute top-8/12 left-1/2 -translate-x-1/2 w-[95%] max-w-6xl z-20 p-3 bg-white text-black shadow-2xl rounded-2xl"> */}
             <div className="relative w-full mx-auto p-1">
-              <div className="absolute top-0 left-0 w-full h-full">
+              <div className="absolute top-0 left-0 w-full">
                 <div className="w-full max-w-2xl mx-auto bg-white rounded-2xl shadow-lg ">
                   <div className="flex bg-gray-50 rounded-xl p-1">
                     <button
@@ -79,10 +78,11 @@ const Banner = () => {
                   </div>
                 </div>
               </div>
+              {/* 2nd section */}
               <div className=" bg-white rounded-2xl ">
                 <div className="bg-white text-black shadow-2xl rounded-2xl p-6 pt-14 mt-10">
                   <div className="flex items-center justify-start gap-4 mb-2">
-                    <label class="flex radio p-2 cursor-pointer">
+                    <label class="flex radio p-2 !cursor-pointer">
                       <input class="my-auto transform scale-125" type="radio" name="sfg" />
                       <div class="title px-2">One Way</div>
                     </label>
@@ -139,7 +139,7 @@ const Banner = () => {
                         </p>
                       </div>
                       <div className="w-1/3">
-                        <button className="w-24 h-20 bg-red-400 hover:bg-red-500 rounded-xl flex items-center justify-center transition-colors duration-200 shadow-sm">
+                        <button className="w-24 h-20 bg-amber-400 hover:bg-amber-500 rounded-xl flex items-center justify-center transition-colors duration-200 shadow-sm">
                           <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path
                               strokeLinecap="round"
@@ -158,9 +158,6 @@ const Banner = () => {
           </div>
         </div>
       </div>
-      {/* <div className="w-7xl mx-auto flex items-center justify-center relative ">
-        <div className="absolute top-0 left-0 w-7xl mx-auto h-full  z-20 bg-white text-black shadow">dads</div>
-      </div> */}
     </>
   );
 };

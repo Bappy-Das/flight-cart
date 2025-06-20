@@ -1,6 +1,7 @@
 import Banner from "./components/Banner";
 import Footer from "./components/Footer";
 import Nav from "./components/Nav";
+import SearchResult from "./components/SearchResult";
 import TravelFeatures from "./components/TravelFeatures";
 
 function App() {
@@ -8,7 +9,8 @@ function App() {
     <>
       <Nav />
       <Banner />
-      <TravelFeatures />
+      {/* <TravelFeatures /> */}
+      <SearchResult />
       <Footer />
     </>
   );
