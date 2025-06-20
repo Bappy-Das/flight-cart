@@ -1,13 +1,15 @@
 import Banner from "./components/Banner";
-import FlightBookingForm from "./components/FlightBookingForm";
+import Footer from "./components/Footer";
 import Nav from "./components/Nav";
+import TravelFeatures from "./components/TravelFeatures";
 
 function App() {
   return (
     <>
       <Nav />
       <Banner />
-      {/* <FlightBookingForm /> */}
+      <TravelFeatures />
+      <Footer />
     </>
   );
 }
