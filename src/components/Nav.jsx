@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import logo from "../assets/images/Vibrant-logo.png";
-import flightIcon from "../assets/icon/flight.SVG";
-import hotelIcon from "../assets/icon/hotel.SVG";
-import holidaysIcon from "../assets/icon/holidays.SVG";
-import visaIcon from "../assets/icon/visa.SVG";
+import flightIcon from "../assets/icon/flight.svg";
+import hotelIcon from "../assets/icon/hotel.svg";
+import holidaysIcon from "../assets/icon/holidays.svg";
+import visaIcon from "../assets/icon/visa.svg";
 
 const Nav = () => {
   const [activeTab, setActiveTab] = useState("flight");
   return (
     <>
       <div className="bg-[#1b1d43] shadow-md ">
-        <div className="flex items-center justify-between p-4 w-7xl mx-auto">
+        <div className="flex items-center justify-between p-4 max-w-7xl mx-auto">
           <div>
             <img src={logo} alt="Logo" className="h-12" />
           </div>
