@@ -1,14 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import backgroundBG from "../assets/bg-video/backgroundBG.mp4";
 import flightIcon from "../assets/icon/flight.svg";
 import hotelIcon from "../assets/icon/hotel.svg";
 import holidaysIcon from "../assets/icon/holidays.svg";
 import visaIcon from "../assets/icon/visa.svg";
+import { searchFlights } from "../api/flightSearch.js";
 
 const Banner = () => {
   const [activeTab, setActiveTab] = useState("flight");
   const [fromOpen, setFromOpen] = useState(false);
   const [toOpen, setToOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [flightData, setFlightData] = useState(null);
   const [selectedFrom, setSelectedFrom] = useState({
     city: "Dhaka",
     code: "DAC",
@@ -73,6 +76,18 @@ const Banner = () => {
     setToOpen(false);
   };
 
+  const fetchFlightData = async () => {
+    setLoading(true);
+    try {
+      const data = await searchFlights();
+      setFlightData(data);
+      console.log(data);
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching flight data:", error);
+    }
+  };
+
   return (
     <>
       <div className="bg-[rgba(0,32,63,0.3)]">
@@ -90,8 +105,8 @@ const Banner = () => {
           </video>
           <div className="max-w-7xl mx-auto relative z-10 flex flex-col  items-start justify-start h-full text-white ">
             <div className="flex flex-col items-start h-full w-full pt-18 px-10">
-              <h1 className="text-5xl font-bold capitalize mb-4 text-[#F0BA1B]">let's roll over the world today!</h1>
-              <h2 className="text-lg font-bold text-[#F0BA1B]">
+              <h1 className="text-3xl md:text-5xl font-bold capitalize mb-4 text-[#F0BA1B]">let's roll over the world today!</h1>
+              <h2 className="text-xs md:text-lg font-bold text-[#F0BA1B]">
                 Flight, Hotel, Holidays & Visa at your fingertips Book the ticket only at FlightCart
               </h2>
             </div>
@@ -103,8 +118,8 @@ const Banner = () => {
                   <div className="flex bg-gray-50 rounded-xl p-1">
                     <button
                       onClick={() => setActiveTab("flight")}
-                      className={`flex-1 flex items-center cursor-pointer justify-center gap-3 px-6 py-4 rounded-lg font-semibold transition-all duration-200 ${
-                        activeTab === "flight" ? "bg-white shadow-sm text-red-500" : "hover:bg-gray-100 text-gray-600"
+                      className={`flex-1 flex flex-col md:flex-row items-center cursor-pointer justify-center gap-3 px-6 py-4 rounded-lg font-semibold transition-all duration-200 ${
+                        activeTab === "flight" ? "bg-white shadow-sm text-amber-400" : "hover:bg-gray-100 text-gray-600"
                       }`}
                     >
                       <img src={flightIcon} width={30} height={30} alt="Flight" />
@@ -113,8 +128,8 @@ const Banner = () => {
 
                     <button
                       onClick={() => setActiveTab("hotel")}
-                      className={`flex-1 flex items-center cursor-pointer justify-center gap-3 px-6 py-4 rounded-lg font-semibold transition-all duration-200 ${
-                        activeTab === "hotel" ? "bg-white shadow-sm text-red-500" : "hover:bg-gray-100 text-gray-600"
+                      className={`flex-1 flex flex-col md:flex-row  items-center cursor-pointer justify-center gap-3 px-6 py-4 rounded-lg font-semibold transition-all duration-200 ${
+                        activeTab === "hotel" ? "bg-white shadow-sm text-amber-400" : "hover:bg-gray-100 text-gray-600"
                       }`}
                     >
                       <img src={hotelIcon} width={30} height={30} alt="hotelIcon" />
@@ -123,8 +138,8 @@ const Banner = () => {
 
                     <button
                       onClick={() => setActiveTab("holidays")}
-                      className={`flex-1 flex items-center cursor-pointer justify-center gap-3 px-6 py-4 rounded-lg font-semibold transition-all duration-200 ${
-                        activeTab === "holidays" ? "bg-white shadow-sm text-red-500" : "hover:bg-gray-100 text-gray-600"
+                      className={`flex-1 flex flex-col md:flex-row  items-center cursor-pointer justify-center gap-3 px-6 py-4 rounded-lg font-semibold transition-all duration-200 ${
+                        activeTab === "holidays" ? "bg-white shadow-sm text-amber-400" : "hover:bg-gray-100 text-gray-600"
                       }`}
                     >
                       <img src={holidaysIcon} width={30} height={30} alt="Holidays" />
@@ -133,8 +148,8 @@ const Banner = () => {
 
                     <button
                       onClick={() => setActiveTab("visa")}
-                      className={`flex-1 flex items-center cursor-pointer justify-center gap-3 px-6 py-4 rounded-lg font-semibold transition-all duration-200 ${
-                        activeTab === "visa" ? "bg-white shadow-sm text-red-500" : "hover:bg-gray-100 text-gray-600"
+                      className={`flex-1 flex flex-col md:flex-row  items-center cursor-pointer justify-center gap-3 px-6 py-4 rounded-lg font-semibold transition-all duration-200 ${
+                        activeTab === "visa" ? "bg-white shadow-sm text-amber-400" : "hover:bg-gray-100 text-gray-600"
                       }`}
                     >
                       <img src={visaIcon} width={30} height={30} alt="Visa" />
@@ -145,24 +160,24 @@ const Banner = () => {
               </div>
               {/* 2nd section */}
               <div className=" bg-white rounded-2xl ">
-                <div className="bg-white text-black shadow-2xl rounded-2xl p-6 pt-14 mt-10">
-                  <div className="flex items-center justify-start gap-4 mb-2">
-                    <label class="flex radio p-2 !cursor-pointer">
-                      <input class="my-auto transform scale-125" type="radio" name="sfg" />
-                      <div class="title px-2">One Way</div>
+                <div className="bg-white text-black shadow-2xl rounded-2xl p-2 pt-20  md:p-6 md:pt-14 mt-10">
+                  <div className="flex items-center justify-start md:gap-4 mb-2">
+                    <label className="flex radio p-2 !cursor-pointer">
+                      <input className="my-auto transform scale-125" type="radio" name="sfg" />
+                      <div className="title px-2">One Way</div>
                     </label>
-                    <label class="flex radio p-2 cursor-pointer">
-                      <input class="my-auto transform scale-125 " type="radio" name="sfg" />
-                      <div class="title px-2">Round Trip</div>
+                    <label className="flex radio p-2 cursor-pointer">
+                      <input className="my-auto transform scale-125 " type="radio" name="sfg" />
+                      <div className="title px-2">Round Trip</div>
                     </label>
-                    <label class="flex radio p-2 cursor-pointer">
-                      <input class="my-auto transform scale-125" type="radio" name="sfg" />
-                      <div class="title px-2">Multi City</div>
+                    <label className="flex radio p-2 cursor-pointer">
+                      <input className="my-auto transform scale-125" type="radio" name="sfg" />
+                      <div className="title px-2">Multi City</div>
                     </label>
                   </div>
-                  <div className="flex items-center justify-between gap-4">
-                    <div className="flex justify-between items-center gap-2 w-1/3">
-                      <div className="relative w-1/2">
+                  <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+                    <div className="flex flex-col md:flex-row justify-between items-center gap-2 w-full md:w-1/3">
+                      <div className="relative w-full md:w-1/2">
                         <div
                           className="px-3 py-2 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50"
                           onClick={() => setFromOpen(!fromOpen)}
@@ -192,7 +207,7 @@ const Banner = () => {
                           </div>
                         )}
                       </div>
-                      <div className="relative w-1/2">
+                      <div className="relative w-full md:w-1/2">
                         <div
                           className=" px-3 py-2 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50"
                           onClick={() => setToOpen(!toOpen)}
@@ -222,7 +237,7 @@ const Banner = () => {
                         )}
                       </div>
                     </div>
-                    <div className="w-1/3">
+                    <div className="md:w-1/3 w-full">
                       <div className="flex border border-gray-300 rounded-lg overflow-hidden bg-white relative ">
                         <div className="flex-1 px-3 py-2 hover:bg-gray-50 cursor-pointer">
                           <p className="text-xs text-gray-500 font-medium mb-1">Departure</p>
@@ -240,17 +255,25 @@ const Banner = () => {
                         </button>
                       </div>
                     </div>
-                    <div className="flex justify-center items-center gap-2 w-1/3">
-                      <div className="w-2/3 px-3 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
+                    <div className="flex flex-col md:flex-row justify-center items-center gap-2 w-full md:w-1/3">
+                      <div className="w-full md:w-2/3 px-3 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
                         <p className="text-xs text-gray-500 font-semibold mb-1">Traveller, Class</p>
                         <h1 className="text-gray-900 font-semibold text-sm mb-1">1 Traveller</h1>
                         <p className="text-xs text-gray-500 font-semibold capitalize overflow-hidden whitespace-nowrap text-ellipsis mb-1">
                           Economy
                         </p>
                       </div>
-                      <div className="w-1/3">
-                        <button className="w-24 h-20 bg-amber-400 hover:bg-amber-500 rounded-xl flex items-center justify-center transition-colors duration-200 shadow-sm">
-                          <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <div className="w-full md:w-1/3">
+                        <button
+                          onClick={fetchFlightData}
+                          className="w-32 h-10 md:w-32 md:h-20 text-white font-bold bg-amber-400 hover:bg-amber-500 rounded-xl flex items-center justify-center transition-colors duration-200 shadow-sm"
+                        >
+                          <svg
+                            className="w-4 h-4 mr-2 md:w-8 md:h-8 text-white"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
                             <path
                               strokeLinecap="round"
                               strokeLinejoin="round"
@@ -258,6 +281,7 @@ const Banner = () => {
                               d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
                             />
                           </svg>
+                          Search
                         </button>
                       </div>
                     </div>

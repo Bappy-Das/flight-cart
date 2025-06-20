@@ -4,9 +4,11 @@ import flightIcon from "../assets/icon/flight.svg";
 import hotelIcon from "../assets/icon/hotel.svg";
 import holidaysIcon from "../assets/icon/holidays.svg";
 import visaIcon from "../assets/icon/visa.svg";
+import { AlignRight, AlignJustify } from "lucide-react";
 
 const Nav = () => {
   const [activeTab, setActiveTab] = useState("flight");
+  const [openMobileNav, setOpenMobileNav] = useState(false);
   return (
     <>
       <div className="bg-[#1b1d43] shadow-md ">
@@ -14,7 +16,7 @@ const Nav = () => {
           <div>
             <img src={logo} alt="Logo" className="h-12" />
           </div>
-          <nav className="flex items-center justify-center">
+          <nav className="md:flex items-center justify-center hidden">
             <ul className="flex space-x-14">
               <li
                 onClick={() => setActiveTab("flight")}
@@ -91,10 +93,58 @@ const Nav = () => {
               </li>
             </ul>
           </nav>
-          <div className="flex items-center gap-4">
+          <div className="hidden md:flex items-center gap-4">
             <button className="px-5 py-1.5 bg-amber-400 hover:bg-white text-[#1b1d43] font-bold rounded-full cursor-pointer transition-all duration-300">
               Sign In
             </button>
+          </div>
+          <div className="md:hidden flex items-center" onClick={() => setOpenMobileNav(!openMobileNav)}>
+            {openMobileNav ? (
+              <AlignJustify className="text-amber-400 h-10 w-10" />
+            ) : (
+              <AlignRight className="text-amber-400 h-10 w-10" />
+            )}
+          </div>
+          <div
+            className={`md:hidden fixed top-20 left-0 w-full h-screen bg-[#1b1d43] z-50 transition-transform duration-300 ${
+              openMobileNav ? "translate-x-0" : "-translate-x-full"
+            }`}
+          >
+            <ul className="flex flex-col p-6 space-y-5">
+              <li
+                className="text-amber-400 text-sm font-bold flex items-center gap-2 cursor-pointer"
+                onClick={() => setActiveTab("flight")}
+              >
+                Flight
+                <img src={flightIcon} width={25} height={25} alt="Flight Icon" />
+              </li>
+              <li
+                className="text-amber-400 text-sm font-bold flex items-center gap-2 cursor-pointer"
+                onClick={() => setActiveTab("hotel")}
+              >
+                Hotel
+                <img src={hotelIcon} width={25} height={25} alt="Hotel Icon" />
+              </li>
+              <li
+                className="text-amber-400 text-sm font-bold flex items-center gap-2 cursor-pointer"
+                onClick={() => setActiveTab("holidays")}
+              >
+                Holidays
+                <img src={holidaysIcon} width={25} height={25} alt="holidays Icon" />
+              </li>
+              <li
+                className="text-amber-400 text-sm font-bold flex items-center gap-2 cursor-pointer"
+                onClick={() => setActiveTab("visa")}
+              >
+                Visa
+                <img src={visaIcon} width={25} height={25} alt="visa Icon" />
+              </li>
+              <div className="flex items-center gap-4 pt-8">
+                <button className="px-8 py-1 bg-amber-400 hover:bg-white text-[#1b1d43] font-bold rounded-full cursor-pointer transition-all duration-300">
+                  Sign In
+                </button>
+              </div>
+            </ul>
           </div>
         </div>
       </div>
