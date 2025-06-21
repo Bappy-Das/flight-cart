@@ -11,13 +11,13 @@ const TravelFeatures = () => {
     },
     {
       icon: <CreditCard className="w-12 h-12 text-orange-500" />,
-      title: "Book With Complete",
+      title: "Flexible Payment",
       subtitle: "",
       bgColor: "bg-orange-50",
     },
     {
       icon: <MapPin className="w-12 h-12 text-teal-500" />,
-      title: "Flexible Payment",
+      title: "Book With Complete ",
       subtitle: "",
       bgColor: "bg-teal-50",
     },
