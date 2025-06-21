@@ -30,7 +30,12 @@ const Banner = ({ onFetchFlightData }) => {
   });
 
   const [selectedDateDeparture, setSelectedDateDeparture] = useState(new Date());
-  const [selectedDateReturn, setSelectedDateReturn] = useState(new Date());
+  const [selectedDateReturn, setSelectedDateReturn] = useState(() => {
+    const today = new Date();
+    const threeDaysLater = new Date(today);
+    threeDaysLater.setDate(today.getDate() + 3);
+    return threeDaysLater;
+  });
   const [departureDate, setDepartureDate] = useState(false);
   const [returnDate, setReturnDate] = useState(false);
 
@@ -165,9 +170,11 @@ const Banner = ({ onFetchFlightData }) => {
   // },
   const handleSearch = () => {
     let SelectedData = {
+      TripType: tripType,
       DepartureAirport: selectedFrom.code,
       ArrivalAirport: selectedTo.code,
-      FlyDate: format(selectedDateDeparture, "yyyy-MM-dd"),
+      DepartureFlyDate: format(selectedDateDeparture, "yyyy-MM-dd"),
+      ReturnFlyDate: format(selectedDateReturn, "yyyy-MM-dd"),
       passengerType: "ADT",
       quantity: count,
       cabinClass: "Economy",
