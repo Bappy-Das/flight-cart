@@ -52,17 +52,21 @@ const SearchResult = ({ flightData, loader }) => {
             </div>
           </div>
         ) : (
-          <div className="flex flex-col md:flex-row lg:flex-row items-start justify-between gap-2 ">
-            <div className="hidden md:block w-full md:w-1/4 lg:w-1/4 p-3 rounded-2xl bg-white">
-              <FlightFilterSidebar />
-            </div>
-            <div className="w-full md:w-3/4 lg:w-3/4 rounded-2xl p-3 md:p-0">
-              {flightData?.results?.length > 0 ? (
-                flightData.results.map((flight, index) => <FlightBookingCard key={index} flightInfo={flight} />)
-              ) : (
-                <NoFlightFound />
-              )}
-            </div>
+          <div>
+            {flightData?.results?.length > 0 ? (
+              <div className="flex flex-col md:flex-row lg:flex-row items-start justify-between gap-2 ">
+                <div className="hidden md:block w-full md:w-1/4 lg:w-1/4 p-3 rounded-2xl bg-white">
+                  <FlightFilterSidebar />
+                </div>
+                <div className="w-full md:w-3/4 lg:w-3/4 rounded-2xl p-3 md:p-0">
+                  {flightData.results.map((flight, index) => (
+                    <FlightBookingCard key={index} flightInfo={flight} />
+                  ))}
+                </div>
+              </div>
+            ) : (
+              <NoFlightFound />
+            )}
           </div>
         )}
       </div>

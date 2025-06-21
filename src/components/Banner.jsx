@@ -74,6 +74,11 @@ const Banner = ({ onFetchFlightData }) => {
       airport: "Kuala Lumpur International Airport",
     },
     {
+      city: "Dhaka",
+      code: "DAC",
+      airport: "Hazrat Shahjalal International Airport",
+    },
+    {
       city: "Cox's Bazar",
       code: "CXB",
       airport: "Cox's Bazar Airport",
