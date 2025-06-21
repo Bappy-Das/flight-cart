@@ -17,7 +17,6 @@ const Banner = ({ onFetchFlightData }) => {
   const [fromOpen, setFromOpen] = useState(false);
   const [toOpen, setToOpen] = useState(false);
   const [travelerClass, setTravelerClass] = useState(false);
-
   const [selectedFrom, setSelectedFrom] = useState({
     city: "Dhaka",
     code: "DAC",
@@ -38,6 +37,8 @@ const Banner = ({ onFetchFlightData }) => {
   });
   const [departureDate, setDepartureDate] = useState(false);
   const [returnDate, setReturnDate] = useState(false);
+  const [passengerType, setPassengerType] = useState("ADT");
+  const [passengerClass, setPassengerClass] = useState("Economy");
 
   const formattedDateDeparture = format(selectedDateDeparture, "dd MMM, yyyy");
   const formattedDateReturn = format(selectedDateReturn, "dd MMM, yyyy");
@@ -62,7 +63,9 @@ const Banner = ({ onFetchFlightData }) => {
     }
   };
 
-  const [count, setCount] = useState(2);
+  const [count, setCount] = useState(1);
+  const increment = () => setCount((prev) => prev + 1);
+  const decrement = () => setCount((prev) => (prev > 0 ? prev - 1 : 0));
 
   const bangladeshAirports = [
     {
@@ -175,13 +178,12 @@ const Banner = ({ onFetchFlightData }) => {
       ArrivalAirport: selectedTo.code,
       DepartureFlyDate: format(selectedDateDeparture, "yyyy-MM-dd"),
       ReturnFlyDate: format(selectedDateReturn, "yyyy-MM-dd"),
-      passengerType: "ADT",
+      passengerType: passengerType,
       quantity: count,
-      cabinClass: "Economy",
+      cabinClass: passengerClass,
       apiId: 1002,
     };
     onFetchFlightData(SelectedData);
-    // console.log(SelectedData);
   };
 
   return (
@@ -264,8 +266,8 @@ const Banner = ({ onFetchFlightData }) => {
                         type="radio"
                         name="sfg"
                         value="one-way"
-                        defaultChecked
                         onClick={handleTripTypeChange}
+                        checked={tripType === "one-way"}
                       />
                       <div className="title px-2">One Way</div>
                     </label>
@@ -276,6 +278,7 @@ const Banner = ({ onFetchFlightData }) => {
                         name="sfg"
                         value="round-trip"
                         onClick={handleTripTypeChange}
+                        checked={tripType === "round-trip"}
                       />
                       <div className="title px-2">Round Trip</div>
                     </label>
@@ -408,9 +411,9 @@ const Banner = ({ onFetchFlightData }) => {
                           onClick={() => setTravelerClass(!travelerClass)}
                         >
                           <p className="text-xs text-gray-500 font-semibold mb-1">Traveller, Class</p>
-                          <h1 className="text-gray-900 font-semibold text-sm mb-1">1 Traveller</h1>
+                          <h1 className="text-gray-900 font-semibold text-sm mb-1">{count} Traveller</h1>
                           <p className="text-xs text-gray-500 font-semibold capitalize overflow-hidden whitespace-nowrap text-ellipsis mb-1">
-                            Economy
+                            {passengerClass}
                           </p>
                         </div>
                         {travelerClass && (
@@ -429,8 +432,27 @@ const Banner = ({ onFetchFlightData }) => {
                                       </div>
                                     </div>
                                     <div className="w-4/5">
-                                      <div className="font-medium text-gray-900 text-xs">Adult</div>
+                                      <div className="font-medium text-gray-900 text-xs" onClick={() => setPassengerType("ADT")}>
+                                        Adult
+                                      </div>
                                       <div className="text-gray-500 text-xs">12 years and above</div>
+                                    </div>
+                                  </div>
+                                  <div className="flex items-center justify-center w-3/12">
+                                    <div className="flex items-center justify-center ">
+                                      <button
+                                        onClick={decrement}
+                                        className="w-4 h-4 bg-[#1b1d43] hover:bg-amber-400 rounded-full flex items-center justify-center text-white"
+                                      >
+                                        <Minus className="w-2 h-2" />
+                                      </button>
+                                      <span className="text-lg font-medium min-w-7 text-center">{count}</span>
+                                      <button
+                                        onClick={increment}
+                                        className="w-4 h-4 bg-[#1b1d43] hover:bg-amber-400 rounded-full flex items-center justify-center text-white"
+                                      >
+                                        <Plus className="w-2 h-2" />
+                                      </button>
                                     </div>
                                   </div>
                                 </div>
@@ -440,7 +462,14 @@ const Banner = ({ onFetchFlightData }) => {
                                 <hr className="text-gray-300 my-1" />
                                 <div>
                                   <label className="flex radio py-1 cursor-pointer">
-                                    <input className="my-auto transform scale-100" type="radio" name="sfg" />
+                                    <input
+                                      className="my-auto transform scale-100"
+                                      type="radio"
+                                      name="sfg"
+                                      value="Economy"
+                                      onClick={() => setPassengerClass("Economy")}
+                                      checked={passengerClass === "Economy"}
+                                    />
                                     <div className="px-2 text-xs font-semibold">Economy</div>
                                   </label>
                                 </div>
