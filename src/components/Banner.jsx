@@ -59,9 +59,6 @@ const Banner = ({ onFetchFlightData }) => {
 
   const [count, setCount] = useState(2);
 
-  const increment = () => setCount((prev) => prev + 1);
-  const decrement = () => setCount((prev) => Math.max(0, prev - 1));
-
   const bangladeshAirports = [
     {
       city: "Singapore",

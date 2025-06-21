@@ -31,8 +31,8 @@ const TravelFeatures = () => {
   ];
 
   return (
-    <div className="w-full max-w-6xl mx-auto px-4 py-8 mt-34">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+    <div className="w-full max-w-6xl mx-auto px-4 py-8 mt-96 md:mt-34">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-28 md:mt-0">
         {features.map((feature, index) => (
           <div
             key={index}

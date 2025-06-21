@@ -9,7 +9,7 @@ import NoFlightFound from "./NoFlightFound";
 const SearchResult = ({ flightData, loader }) => {
   return (
     <div className="bg-gray-100 py-5 mt-16 md:mt-0">
-      <div className="max-w-6xl mx-auto mt-96 md:mt-0">
+      <div className="max-w-6xl mx-auto  md:mt-0">
         {flightData?.results?.length > 0 ? (
           <div className="block md:hidden bg-white rounded-lg shadow-sm p-3 m-2 flex items-center justify-between">
             <div>

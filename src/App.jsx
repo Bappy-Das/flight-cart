@@ -7,8 +7,17 @@ import TravelFeatures from "./components/TravelFeatures";
 import { searchFlights } from "./api/flightSearch.js";
 
 function App() {
-  const [loading, setLoading] = useState(false);
+  const [homeLoading, setHomeLoading] = useState(true);
   const [flightData, setFlightData] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setHomeLoading(false);
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   const fetchFlightData = async (searchData) => {
     console.log(searchData);
@@ -24,11 +33,22 @@ function App() {
 
   return (
     <>
-      <Nav />
-      <Banner onFetchFlightData={fetchFlightData} />
-      <TravelFeatures />
-      <SearchResult flightData={flightData} loader={loading} />
-      <Footer />
+      {homeLoading ? (
+        <div className="flex justify-center items-center h-screen bg-gray-100">
+          <div className="relative">
+            <div className="animate-spin rounded-full h-20 w-20 border-4 border-gray-300 border-t-[#1b1d43]"></div>
+            <div className="absolute top-0 left-0 animate-spin rounded-full h-20 w-20 border-4 border-transparent border-b-amber-400 [animation-direction:reverse] [animation-duration:0.8s]"></div>
+          </div>
+        </div>
+      ) : (
+        <>
+          <Nav />
+          <Banner onFetchFlightData={fetchFlightData} />
+          <TravelFeatures />
+          <SearchResult flightData={flightData} loader={loading} />
+          <Footer />
+        </>
+      )}
     </>
   );
 }
