@@ -374,6 +374,7 @@ const Banner = ({ onFetchFlightData }) => {
                               mode="single"
                               selected={selectedDateDeparture}
                               onSelect={(date) => handleDateSelect(date, "departure")}
+                              disabled={{ before: new Date() }}
                             />
                           </div>
                         )}
@@ -386,6 +387,7 @@ const Banner = ({ onFetchFlightData }) => {
                                 setSelectedDateReturn(date);
                                 setReturnDate(false);
                               }}
+                              disabled={{ before: new Date() }}
                             />
                           </div>
                         )}
