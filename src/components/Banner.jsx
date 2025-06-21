@@ -5,19 +5,18 @@ import flightIcon from "../assets/icon/flight.svg";
 import hotelIcon from "../assets/icon/hotel.svg";
 import holidaysIcon from "../assets/icon/holidays.svg";
 import visaIcon from "../assets/icon/visa.svg";
-import { searchFlights } from "../api/flightSearch.js";
+
 import { format } from "date-fns";
 import { DayPicker } from "react-day-picker";
 import "react-day-picker/dist/style.css";
 
-const Banner = () => {
+const Banner = ({ onFetchFlightData }) => {
   const [activeTab, setActiveTab] = useState("flight");
 
   const [fromOpen, setFromOpen] = useState(false);
   const [toOpen, setToOpen] = useState(false);
   const [travelerClass, setTravelerClass] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [flightData, setFlightData] = useState(null);
+
   const [selectedFrom, setSelectedFrom] = useState({
     city: "Dhaka",
     code: "DAC",
@@ -126,18 +125,6 @@ const Banner = () => {
     setSelectedTo(airport);
     setToOpen(false);
     console.log(airport);
-  };
-
-  const fetchFlightData = async () => {
-    setLoading(true);
-    try {
-      const data = await searchFlights();
-      setFlightData(data);
-      console.log(data);
-      setLoading(false);
-    } catch (error) {
-      console.error("Error fetching flight data:", error);
-    }
   };
 
   return (
@@ -440,7 +427,7 @@ const Banner = () => {
 
                       <div className="w-full md:w-1/3">
                         <button
-                          onClick={fetchFlightData}
+                          onClick={onFetchFlightData}
                           className="w-32 h-10 md:w-32 md:h-20 text-white font-bold bg-[#1b1d43] hover:bg-[#6063a9] rounded-xl flex items-center justify-center transition-colors duration-200 shadow-sm"
                         >
                           <svg

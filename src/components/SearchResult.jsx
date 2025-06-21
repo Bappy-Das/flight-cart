@@ -2,8 +2,11 @@ import React from "react";
 import FlightBookingCard from "./FlightBookingCard";
 import FlightFilterSidebar from "./FlightFilterSidebar";
 import { MoveRight, Dot, SquarePen, Settings2 } from "lucide-react";
+import FlightCardSkeleton from "./FlightCardSkeleton";
+import RightCardSkeleton from "./RightCardSkeleton";
 
-const SearchResult = () => {
+const SearchResult = ({ flightData, loader }) => {
+  console.log(flightData?.results[0]);
   return (
     <div className="bg-gray-100 py-10 mt-16 md:mt-0">
       <div className="max-w-6xl mx-auto mt-96 md:mt-34">
@@ -34,11 +37,22 @@ const SearchResult = () => {
 
         <div className="flex flex-col md:flex-row lg:flex-row items-start justify-between gap-2 ">
           <div className="hidden md:block w-full md:w-1/4 lg:w-1/4 p-3 rounded-2xl bg-white">
-            <FlightFilterSidebar />
+            {/* <FlightFilterSidebar /> */}
+            {loader ? <RightCardSkeleton /> : <FlightFilterSidebar />}
           </div>
           <div className="w-full md:w-3/4 lg:w-3/4 rounded-2xl p-3 md:p-0">
-            <FlightBookingCard />
-            <FlightBookingCard />
+            {loader ? (
+              <div className="flex flex-col gap-4 w-full">
+                <FlightCardSkeleton />
+                <FlightCardSkeleton />
+                <FlightCardSkeleton />
+              </div>
+            ) : null}
+            {flightData?.results?.length > 0 ? (
+              flightData.results.map((flight, index) => <FlightBookingCard key={index} flightInfo={flight} />)
+            ) : (
+              <p>No flights found.</p>
+            )}
           </div>
         </div>
       </div>
