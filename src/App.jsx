@@ -26,7 +26,7 @@ function App() {
     <>
       <Nav />
       <Banner onFetchFlightData={fetchFlightData} />
-      {/* {flightData.results?.length > 0 ? <TravelFeatures /> : null} */}
+      <TravelFeatures />
       <SearchResult flightData={flightData} loader={loading} />
       <Footer />
     </>

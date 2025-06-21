@@ -26,23 +26,7 @@ export const searchFlights = async (searchData) => {
         CabinClass: searchData.CabinClass || "Economy",
         ApiId: 1002,
       },
-      // {
-      //   OriginDestinationOptions: [
-      //     {
-      //       DepartureAirport: "SIN",
-      //       ArrivalAirport: "KUL",
-      //       FlyDate: "2025-07-13",
-      //     },
-      //   ],
-      //   Passengers: [
-      //     {
-      //       PassengerType: "ADT",
-      //       Quantity: 1,
-      //     },
-      //   ],
-      //   CabinClass: "Economy",
-      //   ApiId: 1002,
-      // },
+
       {
         headers: {
           Authorization: `Bearer ${AUTH_TOKEN}`,
@@ -56,3 +40,21 @@ export const searchFlights = async (searchData) => {
     throw error;
   }
 };
+
+// {
+//   OriginDestinationOptions: [
+//     {
+//       DepartureAirport: "SIN",
+//       ArrivalAirport: "KUL",
+//       FlyDate: "2025-07-13",
+//     },
+//   ],
+//   Passengers: [
+//     {
+//       PassengerType: "ADT",
+//       Quantity: 1,
+//     },
+//   ],
+//   CabinClass: "Economy",
+//   ApiId: 1002,
+// },

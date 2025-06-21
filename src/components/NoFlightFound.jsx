@@ -3,7 +3,7 @@ import flightIcon from "../assets/icon/flight.svg";
 
 const NoFlightFound = () => {
   return (
-    <div className="max-w-4xl mx-auto mb-3">
+    <div className="w-full mx-auto mb-3">
       <div className="bg-white rounded-lg shadow-sm p-10 flex flex-col items-center justify-center gap-4 ">
         <img src={flightIcon} width={100} height={100} alt="" srcset="" />
         <h1 className="text-3xl text-gray-800">Ooops !!!</h1>

@@ -12,6 +12,7 @@ import "react-day-picker/dist/style.css";
 
 const Banner = ({ onFetchFlightData }) => {
   const [activeTab, setActiveTab] = useState("flight");
+  const [tripType, setTripType] = useState("one-way");
 
   const [fromOpen, setFromOpen] = useState(false);
   const [toOpen, setToOpen] = useState(false);
@@ -63,9 +64,14 @@ const Banner = ({ onFetchFlightData }) => {
 
   const bangladeshAirports = [
     {
-      city: "Dhaka",
-      code: "DAC",
-      airport: "Hazrat Shahjalal International Airport",
+      city: "Singapore",
+      code: "SIN",
+      airport: "Singapore Changi Airport",
+    },
+    {
+      city: "Kuala Lumpur",
+      code: "KUL",
+      airport: "Kuala Lumpur International Airport",
     },
     {
       city: "Cox's Bazar",
@@ -127,6 +133,10 @@ const Banner = ({ onFetchFlightData }) => {
       setSelectedDateReturn(date);
       setReturnDate(false);
     }
+  };
+
+  const handleTripTypeChange = (e) => {
+    setTripType(e.target.value);
   };
   // {
   //   selectedFrom:SelectedFrom;
@@ -240,16 +250,25 @@ const Banner = ({ onFetchFlightData }) => {
                 <div className="bg-white text-black shadow-2xl rounded-2xl p-2 pt-20  md:p-6 md:pt-14 mt-10">
                   <div className="flex items-center justify-start md:gap-4 mb-2">
                     <label className="flex radio p-2 cursor-pointer">
-                      <input className="my-auto transform scale-125" type="radio" name="sfg" />
+                      <input
+                        className="my-auto transform scale-125"
+                        type="radio"
+                        name="sfg"
+                        value="one-way"
+                        defaultChecked
+                        onClick={handleTripTypeChange}
+                      />
                       <div className="title px-2">One Way</div>
                     </label>
                     <label className="flex radio p-2 cursor-pointer">
-                      <input className="my-auto transform scale-125 " type="radio" name="sfg" />
+                      <input
+                        className="my-auto transform scale-125 "
+                        type="radio"
+                        name="sfg"
+                        value="round-trip"
+                        onClick={handleTripTypeChange}
+                      />
                       <div className="title px-2">Round Trip</div>
-                    </label>
-                    <label className="flex radio p-2 cursor-pointer">
-                      <input className="my-auto transform scale-125" type="radio" name="sfg" />
-                      <div className="title px-2">Multi City</div>
                     </label>
                   </div>
                   {/* from to  */}
@@ -329,12 +348,19 @@ const Banner = ({ onFetchFlightData }) => {
                         <div className="w-px bg-gray-300"></div>
                         <div className="relative w-1/2">
                           <div
-                            className="flex-1 px-3 py-2 hover:bg-gray-50 cursor-pointer"
-                            onClick={() => toggleDate("returnDate")}
+                            className={`flex-1 px-3 py-2 cursor-pointer rounded-md 
+                              ${tripType === "one-way" ? "bg-gray-100 cursor-not-allowed opacity-60" : "hover:bg-gray-50"}`}
+                            onClick={() => {
+                              if (tripType !== "one-way") {
+                                toggleDate("returnDate");
+                              }
+                            }}
                           >
                             <p className="text-xs text-gray-500 font-medium mb-1">Return</p>
-                            <h2 className="text-sm font-semibold text-gray-900 mb-1">{formattedDateReturn}</h2>
-                            <p className="text-sm text-gray-500">{returnDayName}</p>
+                            <h2 className="text-sm font-semibold text-gray-900 mb-1">
+                              {tripType === "one-way" ? "Bigger Savings On" : formattedDateReturn}
+                            </h2>
+                            <p className="text-sm text-gray-500">{tripType === "one-way" ? "Return Flight" : returnDayName}</p>
                           </div>
                         </div>
                         {/* <button className="absolute top-2/6 right-2 w-6 h-6 bg-gray-400 hover:bg-gray-500 rounded-full flex items-center justify-center text-white text-xs transition-colors">
@@ -396,53 +422,6 @@ const Banner = ({ onFetchFlightData }) => {
                                       <div className="text-gray-500 text-xs">12 years and above</div>
                                     </div>
                                   </div>
-                                  <div className="flex items-center w-3/12">
-                                    <button
-                                      onClick={decrement}
-                                      className="w-3 h-3 bg-red-500 hover:bg-red-600 rounded-full flex items-center justify-center "
-                                      disabled={count === 0}
-                                    >
-                                      <Minus className="w-3 h-3 text-white" />
-                                    </button>
-                                    <span className="text-sm font-medium text-gray-900 min-w-[1.5rem] text-center">{count}</span>
-                                    <button
-                                      onClick={increment}
-                                      className="w-3 h-3 bg-red-500 hover:bg-red-600 rounded-full flex items-center justify-center"
-                                    >
-                                      <Plus className="w-3 h-3 text-white" />
-                                    </button>
-                                  </div>
-                                </div>
-                                <div className="flex items-center justify-between py-2">
-                                  <div className="flex items-center w-9/12">
-                                    <div className="w-1/5">
-                                      <div className="w-4 h-4 bg-red-500 rounded-full flex items-center justify-center">
-                                        <svg className="w-2 h-2 text-white" viewBox="0 0 24 24" fill="currentColor">
-                                          <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
-                                        </svg>
-                                      </div>
-                                    </div>
-                                    <div className="w-4/5">
-                                      <div className="font-medium text-gray-900 text-xs">Adult</div>
-                                      <div className="text-gray-500 text-xs">12 years and above</div>
-                                    </div>
-                                  </div>
-                                  <div className="flex items-center w-3/12">
-                                    <button
-                                      onClick={decrement}
-                                      className="w-3 h-3 bg-red-500 hover:bg-red-600 rounded-full flex items-center justify-center "
-                                      disabled={count === 0}
-                                    >
-                                      <Minus className="w-3 h-3 text-white" />
-                                    </button>
-                                    <span className="text-sm font-medium text-gray-900 min-w-[1.5rem] text-center">{count}</span>
-                                    <button
-                                      onClick={increment}
-                                      className="w-3 h-3 bg-red-500 hover:bg-red-600 rounded-full flex items-center justify-center"
-                                    >
-                                      <Plus className="w-3 h-3 text-white" />
-                                    </button>
-                                  </div>
                                 </div>
                               </div>
                               <div>
@@ -453,21 +432,17 @@ const Banner = ({ onFetchFlightData }) => {
                                     <input className="my-auto transform scale-100" type="radio" name="sfg" />
                                     <div className="px-2 text-xs font-semibold">Economy</div>
                                   </label>
-                                  <label className="flex radio py-1 cursor-pointer">
-                                    <input className="my-auto transform scale-100" type="radio" name="sfg" />
-                                    <div className="px-2 text-xs font-semibold">Economy</div>
-                                  </label>
                                 </div>
                               </div>
                             </div>
                           </div>
                         )}
                       </div>
-                      {/* onClick={onFetchFlightData()} */}
+
                       <div className="w-full md:w-1/3">
                         <button
                           onClick={() => handleSearch()}
-                          className="w-32 h-10 md:w-32 md:h-20 text-white font-bold bg-[#1b1d43] hover:bg-[#6063a9] rounded-xl flex items-center justify-center transition-colors duration-200 shadow-sm"
+                          className="w-32 h-10 md:w-32 md:h-20 cursor-pointer text-white font-bold bg-[#1b1d43] hover:bg-[#6063a9] rounded-xl flex items-center justify-center transition-colors duration-200 shadow-sm"
                         >
                           <svg
                             className="w-4 h-4 mr-2 md:w-8 md:h-8 text-white"
