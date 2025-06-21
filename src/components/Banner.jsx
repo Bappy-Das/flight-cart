@@ -55,17 +55,6 @@ const Banner = ({ onFetchFlightData }) => {
       }
     }
   };
-  const handleDateSelect = (date, type) => {
-    if (!date) return;
-
-    if (type === "departure") {
-      setSelectedDateDeparture(date);
-      setDepartureDate(false);
-    } else if (type === "return") {
-      setSelectedDateReturn(date);
-      setReturnDate(false);
-    }
-  };
 
   const [count, setCount] = useState(2);
 
@@ -125,6 +114,55 @@ const Banner = ({ onFetchFlightData }) => {
     setSelectedTo(airport);
     setToOpen(false);
     console.log(airport);
+  };
+
+  const handleDateSelect = (date, type) => {
+    if (!date) return;
+
+    if (type === "departure") {
+      setSelectedDateDeparture(date);
+      console.log(selectedDateDeparture);
+      setDepartureDate(false);
+    } else if (type === "return") {
+      setSelectedDateReturn(date);
+      setReturnDate(false);
+    }
+  };
+  // {
+  //   selectedFrom:SelectedFrom;
+  //   selectedTo:SelectedTo;
+  //   selectedDateDeparture:SelectedDateDeparture;
+  //   selectedDateReturn:SelectedDateReturn;
+  // }
+  // {
+  //   OriginDestinationOptions: [
+  //     {
+  //       DepartureAirport: "SIN",
+  //       ArrivalAirport: "KUL",
+  //       FlyDate: "2025-07-13",
+  //     },
+  //   ],
+  //   Passengers: [
+  //     {
+  //       PassengerType: "ADT",
+  //       Quantity: 1,
+  //     },
+  //   ],
+  //   CabinClass: "Economy",
+  //   ApiId: 1002,
+  // },
+  const handleSearch = () => {
+    let SelectedData = {
+      DepartureAirport: selectedFrom.code,
+      ArrivalAirport: selectedTo.code,
+      FlyDate: format(selectedDateDeparture, "yyyy-MM-dd"),
+      passengerType: "ADT",
+      quantity: count,
+      cabinClass: "Economy",
+      apiId: 1002,
+    };
+    onFetchFlightData(SelectedData);
+    // console.log(SelectedData);
   };
 
   return (
@@ -214,6 +252,7 @@ const Banner = ({ onFetchFlightData }) => {
                       <div className="title px-2">Multi City</div>
                     </label>
                   </div>
+                  {/* from to  */}
                   <div className="flex flex-col md:flex-row items-center justify-between gap-4">
                     <div className="flex flex-col md:flex-row justify-between items-center gap-2 w-full md:w-1/3">
                       <div className="relative w-full md:w-1/2">
@@ -424,10 +463,10 @@ const Banner = ({ onFetchFlightData }) => {
                           </div>
                         )}
                       </div>
-
+                      {/* onClick={onFetchFlightData()} */}
                       <div className="w-full md:w-1/3">
                         <button
-                          onClick={onFetchFlightData}
+                          onClick={() => handleSearch()}
                           className="w-32 h-10 md:w-32 md:h-20 text-white font-bold bg-[#1b1d43] hover:bg-[#6063a9] rounded-xl flex items-center justify-center transition-colors duration-200 shadow-sm"
                         >
                           <svg

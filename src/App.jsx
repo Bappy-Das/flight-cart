@@ -10,19 +10,18 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [flightData, setFlightData] = useState(null);
 
-  const fetchFlightData = async () => {
+  const fetchFlightData = async (searchData) => {
+    console.log(searchData);
     setLoading(true);
     try {
-      const data = await searchFlights();
+      const data = await searchFlights(searchData);
       setFlightData(data);
       setLoading(false);
     } catch (error) {
       console.error("Error fetching flight data:", error);
     }
   };
-  // useEffect(() => {
-  //   console.log("flightData updated:", flightData);
-  // }, [flightData]);
+
   return (
     <>
       <Nav />

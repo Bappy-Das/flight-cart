@@ -4,9 +4,9 @@ import FlightFilterSidebar from "./FlightFilterSidebar";
 import { MoveRight, Dot, SquarePen, Settings2 } from "lucide-react";
 import FlightCardSkeleton from "./FlightCardSkeleton";
 import RightCardSkeleton from "./RightCardSkeleton";
+import NoFlightFound from "./NoFlightFound";
 
 const SearchResult = ({ flightData, loader }) => {
-  console.log(flightData?.results[0]);
   return (
     <div className="bg-gray-100 py-10 mt-16 md:mt-0">
       <div className="max-w-6xl mx-auto mt-96 md:mt-34">
@@ -51,7 +51,7 @@ const SearchResult = ({ flightData, loader }) => {
             {flightData?.results?.length > 0 ? (
               flightData.results.map((flight, index) => <FlightBookingCard key={index} flightInfo={flight} />)
             ) : (
-              <p>No flights found.</p>
+              <NoFlightFound />
             )}
           </div>
         </div>
