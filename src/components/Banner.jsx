@@ -10,7 +10,7 @@ import { format } from "date-fns";
 import { DayPicker } from "react-day-picker";
 import "react-day-picker/dist/style.css";
 
-const Banner = ({ onFetchFlightData }) => {
+const Banner = ({ onFetchFlightData, loader }) => {
   const [activeTab, setActiveTab] = useState("flight");
   const [tripType, setTripType] = useState("one-way");
 
@@ -484,19 +484,23 @@ const Banner = ({ onFetchFlightData }) => {
                           onClick={() => handleSearch()}
                           className="w-32 h-10 md:w-32 md:h-20 cursor-pointer text-white font-bold bg-[#1b1d43] hover:bg-[#6063a9] rounded-xl flex items-center justify-center transition-colors duration-200 shadow-sm"
                         >
-                          <svg
-                            className="w-4 h-4 mr-2 md:w-8 md:h-8 text-white"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                            />
-                          </svg>
+                          {loader ? (
+                            <div className="animate-spin rounded-full h-6 w-6 mr-3 border-3 border-white border-t-amber-400"></div>
+                          ) : (
+                            <svg
+                              className="w-4 h-4 mr-2 md:w-8 md:h-8 text-white"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                              />
+                            </svg>
+                          )}
                           Search
                         </button>
                       </div>

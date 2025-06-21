@@ -43,7 +43,7 @@ function App() {
       ) : (
         <>
           <Nav />
-          <Banner onFetchFlightData={fetchFlightData} />
+          <Banner onFetchFlightData={fetchFlightData} loader={loading} />
           <TravelFeatures />
           <SearchResult flightData={flightData} loader={loading} />
           <Footer />
