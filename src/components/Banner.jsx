@@ -1,15 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import { Minus, Plus } from "lucide-react";
 import backgroundBG from "../assets/bg-video/backgroundBG.mp4";
 import flightIcon from "../assets/icon/flight.svg";
 import hotelIcon from "../assets/icon/hotel.svg";
 import holidaysIcon from "../assets/icon/holidays.svg";
 import visaIcon from "../assets/icon/visa.svg";
 import { searchFlights } from "../api/flightSearch.js";
+import { format } from "date-fns";
+import { DayPicker } from "react-day-picker";
+import "react-day-picker/dist/style.css";
 
 const Banner = () => {
   const [activeTab, setActiveTab] = useState("flight");
+
   const [fromOpen, setFromOpen] = useState(false);
   const [toOpen, setToOpen] = useState(false);
+  const [travelerClass, setTravelerClass] = useState(false);
   const [loading, setLoading] = useState(false);
   const [flightData, setFlightData] = useState(null);
   const [selectedFrom, setSelectedFrom] = useState({
@@ -22,6 +28,50 @@ const Banner = () => {
     code: "CXB",
     airport: "Cox's Bazar Airport",
   });
+
+  const [selectedDateDeparture, setSelectedDateDeparture] = useState(new Date());
+  const [selectedDateReturn, setSelectedDateReturn] = useState(new Date());
+  const [departureDate, setDepartureDate] = useState(false);
+  const [returnDate, setReturnDate] = useState(false);
+
+  const formattedDateDeparture = format(selectedDateDeparture, "dd MMM, yyyy");
+  const formattedDateReturn = format(selectedDateReturn, "dd MMM, yyyy");
+  const departureDayName = format(selectedDateDeparture, "EEEE");
+  const returnDayName = format(selectedDateReturn, "EEEE");
+
+  const toggleDate = (type) => {
+    if (type === "departureDate") {
+      if (!departureDate) {
+        setDepartureDate(true);
+        setReturnDate(false);
+      } else {
+        setDepartureDate(false);
+      }
+    } else if (type === "returnDate") {
+      if (!returnDate) {
+        setReturnDate(true);
+        setDepartureDate(false);
+      } else {
+        setReturnDate(false);
+      }
+    }
+  };
+  const handleDateSelect = (date, type) => {
+    if (!date) return;
+
+    if (type === "departure") {
+      setSelectedDateDeparture(date);
+      setDepartureDate(false);
+    } else if (type === "return") {
+      setSelectedDateReturn(date);
+      setReturnDate(false);
+    }
+  };
+
+  const [count, setCount] = useState(2);
+
+  const increment = () => setCount((prev) => prev + 1);
+  const decrement = () => setCount((prev) => Math.max(0, prev - 1));
 
   const bangladeshAirports = [
     {
@@ -69,11 +119,13 @@ const Banner = () => {
   const handleFromSelect = (airport) => {
     setSelectedFrom(airport);
     setFromOpen(false);
+    console.log(airport);
   };
 
   const handleToSelect = (airport) => {
     setSelectedTo(airport);
     setToOpen(false);
+    console.log(airport);
   };
 
   const fetchFlightData = async () => {
@@ -162,7 +214,7 @@ const Banner = () => {
               <div className=" bg-white rounded-2xl ">
                 <div className="bg-white text-black shadow-2xl rounded-2xl p-2 pt-20  md:p-6 md:pt-14 mt-10">
                   <div className="flex items-center justify-start md:gap-4 mb-2">
-                    <label className="flex radio p-2 !cursor-pointer">
+                    <label className="flex radio p-2 cursor-pointer">
                       <input className="my-auto transform scale-125" type="radio" name="sfg" />
                       <div className="title px-2">One Way</div>
                     </label>
@@ -190,7 +242,7 @@ const Banner = () => {
                         </div>
 
                         {fromOpen && (
-                          <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-300 rounded-lg shadow-lg z-10 max-h-64 w-80 overflow-y-auto">
+                          <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-300 rounded-lg shadow-lg z-10 max-h-64 w-full md:w-80 overflow-y-auto">
                             {bangladeshAirports.map((airport, index) => (
                               <button
                                 key={index}
@@ -219,7 +271,7 @@ const Banner = () => {
                           </p>
                         </div>
                         {toOpen && (
-                          <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-300 rounded-lg shadow-lg z-10 max-h-64 w-80 overflow-y-auto">
+                          <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-300 rounded-lg shadow-lg z-10 max-h-64 w-full md:w-80 overflow-y-auto">
                             {bangladeshAirports.map((airport, index) => (
                               <button
                                 key={index}
@@ -238,35 +290,158 @@ const Banner = () => {
                       </div>
                     </div>
                     <div className="md:w-1/3 w-full">
-                      <div className="flex border border-gray-300 rounded-lg overflow-hidden bg-white relative ">
-                        <div className="flex-1 px-3 py-2 hover:bg-gray-50 cursor-pointer">
+                      <div className="flex border border-gray-300 rounded-lg  bg-white relative ">
+                        <div
+                          className="flex-1 px-3 py-2 hover:bg-gray-50 cursor-pointer"
+                          onClick={() => toggleDate("departureDate")}
+                        >
                           <p className="text-xs text-gray-500 font-medium mb-1">Departure</p>
-                          <h2 className="text-sm font-semibold text-gray-900 mb-1">22 Jun, 2025</h2>
-                          <p className="text-sm text-gray-500">Sunday</p>
+                          <h2 className="text-sm font-semibold text-gray-900 mb-1">{formattedDateDeparture}</h2>
+                          <p className="text-sm text-gray-500">{departureDayName}</p>
                         </div>
+
                         <div className="w-px bg-gray-300"></div>
-                        <div className="flex-1 px-3 py-2 hover:bg-gray-50 cursor-pointer">
-                          <p className="text-xs text-gray-500 font-medium mb-1">Return</p>
-                          <h2 className="text-sm font-semibold text-gray-900 mb-1">25 Jun, 2025</h2>
-                          <p className="text-sm text-gray-500">Wednesday</p>
+                        <div className="relative w-1/2">
+                          <div
+                            className="flex-1 px-3 py-2 hover:bg-gray-50 cursor-pointer"
+                            onClick={() => toggleDate("returnDate")}
+                          >
+                            <p className="text-xs text-gray-500 font-medium mb-1">Return</p>
+                            <h2 className="text-sm font-semibold text-gray-900 mb-1">{formattedDateReturn}</h2>
+                            <p className="text-sm text-gray-500">{returnDayName}</p>
+                          </div>
                         </div>
-                        <button className="absolute top-2/6 right-2 w-6 h-6 bg-gray-400 hover:bg-gray-500 rounded-full flex items-center justify-center text-white text-xs transition-colors">
+                        {/* <button className="absolute top-2/6 right-2 w-6 h-6 bg-gray-400 hover:bg-gray-500 rounded-full flex items-center justify-center text-white text-xs transition-colors">
                           ×
-                        </button>
+                        </button> */}
+                        {departureDate && (
+                          <div className="absolute p-3 top-full left-0 right-0 mt-1 bg-white border border-gray-300 rounded-lg shadow-lg z-50 max-h-64 w-full overflow-y-auto">
+                            <DayPicker
+                              mode="single"
+                              selected={selectedDateDeparture}
+                              onSelect={(date) => handleDateSelect(date, "departure")}
+                            />
+                          </div>
+                        )}
+                        {returnDate && (
+                          <div className="absolute p-3 top-full left-0 right-0 mt-1 bg-white border border-gray-300 rounded-lg shadow-lg z-50 max-h-64 w-full overflow-y-auto">
+                            <DayPicker
+                              mode="single"
+                              selected={selectedDateReturn}
+                              onSelect={(date) => {
+                                setSelectedDateReturn(date);
+                                setReturnDate(false);
+                              }}
+                            />
+                          </div>
+                        )}
                       </div>
                     </div>
+
                     <div className="flex flex-col md:flex-row justify-center items-center gap-2 w-full md:w-1/3">
-                      <div className="w-full md:w-2/3 px-3 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
-                        <p className="text-xs text-gray-500 font-semibold mb-1">Traveller, Class</p>
-                        <h1 className="text-gray-900 font-semibold text-sm mb-1">1 Traveller</h1>
-                        <p className="text-xs text-gray-500 font-semibold capitalize overflow-hidden whitespace-nowrap text-ellipsis mb-1">
-                          Economy
-                        </p>
+                      <div className="relative w-full md:w-2/3">
+                        <div
+                          className=" px-3 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer"
+                          onClick={() => setTravelerClass(!travelerClass)}
+                        >
+                          <p className="text-xs text-gray-500 font-semibold mb-1">Traveller, Class</p>
+                          <h1 className="text-gray-900 font-semibold text-sm mb-1">1 Traveller</h1>
+                          <p className="text-xs text-gray-500 font-semibold capitalize overflow-hidden whitespace-nowrap text-ellipsis mb-1">
+                            Economy
+                          </p>
+                        </div>
+                        {travelerClass && (
+                          <div className="absolute p-3 top-full left-0 right-0 mt-1 bg-white border border-gray-300 rounded-lg shadow-lg z-50 max-h-64 w-full overflow-y-auto">
+                            <div className="flex flex-col gap-2">
+                              <div>
+                                <span className="text-gray-500 font-bold text-xs tracking-wide">Travellers</span>
+                                <hr className="text-gray-300 mt-2" />
+                                <div className="flex items-center justify-between py-2">
+                                  <div className="flex items-center w-9/12">
+                                    <div className="w-1/5">
+                                      <div className="w-4 h-4 bg-red-500 rounded-full flex items-center justify-center">
+                                        <svg className="w-2 h-2 text-white" viewBox="0 0 24 24" fill="currentColor">
+                                          <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+                                        </svg>
+                                      </div>
+                                    </div>
+                                    <div className="w-4/5">
+                                      <div className="font-medium text-gray-900 text-xs">Adult</div>
+                                      <div className="text-gray-500 text-xs">12 years and above</div>
+                                    </div>
+                                  </div>
+                                  <div className="flex items-center w-3/12">
+                                    <button
+                                      onClick={decrement}
+                                      className="w-3 h-3 bg-red-500 hover:bg-red-600 rounded-full flex items-center justify-center "
+                                      disabled={count === 0}
+                                    >
+                                      <Minus className="w-3 h-3 text-white" />
+                                    </button>
+                                    <span className="text-sm font-medium text-gray-900 min-w-[1.5rem] text-center">{count}</span>
+                                    <button
+                                      onClick={increment}
+                                      className="w-3 h-3 bg-red-500 hover:bg-red-600 rounded-full flex items-center justify-center"
+                                    >
+                                      <Plus className="w-3 h-3 text-white" />
+                                    </button>
+                                  </div>
+                                </div>
+                                <div className="flex items-center justify-between py-2">
+                                  <div className="flex items-center w-9/12">
+                                    <div className="w-1/5">
+                                      <div className="w-4 h-4 bg-red-500 rounded-full flex items-center justify-center">
+                                        <svg className="w-2 h-2 text-white" viewBox="0 0 24 24" fill="currentColor">
+                                          <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+                                        </svg>
+                                      </div>
+                                    </div>
+                                    <div className="w-4/5">
+                                      <div className="font-medium text-gray-900 text-xs">Adult</div>
+                                      <div className="text-gray-500 text-xs">12 years and above</div>
+                                    </div>
+                                  </div>
+                                  <div className="flex items-center w-3/12">
+                                    <button
+                                      onClick={decrement}
+                                      className="w-3 h-3 bg-red-500 hover:bg-red-600 rounded-full flex items-center justify-center "
+                                      disabled={count === 0}
+                                    >
+                                      <Minus className="w-3 h-3 text-white" />
+                                    </button>
+                                    <span className="text-sm font-medium text-gray-900 min-w-[1.5rem] text-center">{count}</span>
+                                    <button
+                                      onClick={increment}
+                                      className="w-3 h-3 bg-red-500 hover:bg-red-600 rounded-full flex items-center justify-center"
+                                    >
+                                      <Plus className="w-3 h-3 text-white" />
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+                              <div>
+                                <span className="text-gray-500 font-bold text-xs tracking-wide mt-2">Booking Class</span>
+                                <hr className="text-gray-300 my-1" />
+                                <div>
+                                  <label className="flex radio py-1 cursor-pointer">
+                                    <input className="my-auto transform scale-100" type="radio" name="sfg" />
+                                    <div className="px-2 text-xs font-semibold">Economy</div>
+                                  </label>
+                                  <label className="flex radio py-1 cursor-pointer">
+                                    <input className="my-auto transform scale-100" type="radio" name="sfg" />
+                                    <div className="px-2 text-xs font-semibold">Economy</div>
+                                  </label>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        )}
                       </div>
+
                       <div className="w-full md:w-1/3">
                         <button
                           onClick={fetchFlightData}
-                          className="w-32 h-10 md:w-32 md:h-20 text-white font-bold bg-amber-400 hover:bg-amber-500 rounded-xl flex items-center justify-center transition-colors duration-200 shadow-sm"
+                          className="w-32 h-10 md:w-32 md:h-20 text-white font-bold bg-[#1b1d43] hover:bg-[#6063a9] rounded-xl flex items-center justify-center transition-colors duration-200 shadow-sm"
                         >
                           <svg
                             className="w-4 h-4 mr-2 md:w-8 md:h-8 text-white"

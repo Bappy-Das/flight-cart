@@ -9,13 +9,13 @@ const AUTH_TOKEN = import.meta.env.VITE_AUTH_TOKEN;
 export const searchFlights = async () => {
   try {
     const response = await axios.post(
-      BASE_URL, // ✅ already complete URL
+      BASE_URL,
       {
         OriginDestinationOptions: [
           {
             DepartureAirport: "SIN",
             ArrivalAirport: "KUL",
-            FlyDate: "2025-06-20",
+            FlyDate: "2025-07-13",
           },
         ],
         Passengers: [

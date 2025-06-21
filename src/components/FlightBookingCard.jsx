@@ -20,7 +20,7 @@ export default function FlightBookingCard() {
 
             <div className="flex flex-col md:flex-row md:items-center md:justify-between">
               <div className="flex items-center gap-4 pb-5 ml-6 md:ml-0">
-                <div className="w-6 h-6 md:w-12 md:h-12 bg-blue-600 rounded flex items-center justify-center">
+                <div className="w-6 h-6 md:w-12 md:h-12 bg-[#1b1d43] rounded flex items-center justify-center">
                   <Plane className="w-6 h-6 text-white" />
                 </div>
                 <div>
@@ -73,7 +73,7 @@ export default function FlightBookingCard() {
               </div>
               <div className="text-gray-500 text-xs line-through md:mb-2">BDT 5,199</div>
             </div>
-            <button className="bg-amber-400 hover:bg-amber-500 text-white px-8 py-1 rounded-full font-semibold transition-colors">
+            <button className="bg-[#1b1d43] hover:bg-[#6063a9] text-white px-8 py-1 rounded-full font-semibold transition-colors">
               Select
             </button>
           </div>
